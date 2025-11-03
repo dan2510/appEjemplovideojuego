@@ -1,0 +1,45 @@
+<div class="container">
+
+  <mat-card>
+    <mat-card-header>
+      <h1 class="mat-h1">Órdenes</h1>
+    </mat-card-header>
+  </mat-card>
+
+  @if (cargando()) {
+  <p>Cargando órdenes...</p>
+  }
+
+  @if (error()) {
+  <mat-card class="error-card">
+    <mat-card-content>{{ error() }}</mat-card-content>
+  </mat-card>
+  }
+
+  @if (!cargando() && !error() && ordenes().length > 0) {
+
+  <div class="orders-flex-container">
+    @for(order of ordenes(); track order.id) {
+    <mat-card class="dashboard-card">
+
+      <mat-card-header class="dashboard-card-header">
+        <mat-card-title>Orden #{{ order.id }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="dashboard-card-content">
+        <p class="price">{{ order.fechaOrden | date:'dd/MM/yyyy' }}</p>
+        <p><b>Nombre usuario:</b> {{ order.usuario.nombre }}</p>
+        <p><b>Email usuario:</b> {{ order.usuario.email }}</p>
+      </mat-card-content>
+
+    </mat-card>
+    }
+  </div>
+
+  } @else if (!cargando() && !error()) {
+  <mat-card class="empty-card">
+    <mat-card-content>No hay órdenes registradas</mat-card-content>
+  </mat-card>
+  }
+
+</div>

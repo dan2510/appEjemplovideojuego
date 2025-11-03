@@ -1,0 +1,105 @@
+<mat-card class="box">
+    <mat-card-title>
+        <h3>Orden de Compra</h3>
+    </mat-card-title>
+    <mat-card-content>
+        Fecha: {{ fecha | date: 'dd/MM/yyyy' }}
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button matFab extended class="btn-secondary" (click)="listado()">
+            Seguir comprando
+            <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+    </mat-card-actions>
+
+</mat-card>
+
+<mat-divider></mat-divider>
+
+@if (ordenItems().length > 0) {
+
+<mat-card class="box">
+    <mat-card-content>
+
+        <mat-table [dataSource]="dataSource" class="table-orden">
+
+            <ng-container matColumnDef="producto">
+                <mat-header-cell *matHeaderCellDef> Videojuego </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!--  Nombre Producto -->
+                    {{element.producto.nombre}}
+                </mat-cell>
+
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="precio">
+                <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!--  Precio Producto -->
+                    {{element.producto.precio | currency}}
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <div class="cantidad-container">
+                        <button matMiniFab (click)="aumentarCantidad(element.producto)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <div class="cantidad-box">
+
+                            {{element.cantidad }}
+
+                        </div>
+                        <button matMiniFab (click)="disminuirCantidad(element.producto)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">Total </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="subtotal">
+                <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!--  Subtotal -->
+                    {{element.subtotal | currency}}
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">
+                    <!--Total -->
+                    {{totalCompra() | currency}}
+                </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button matMiniFab (click)="eliminarItem(element.producto.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="bg-tertiary"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            <mat-footer-row *matFooterRowDef="displayedColumns" class="bg-tertiary"></mat-footer-row>
+        </mat-table>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button matFab extended class="btn-primary" (click)="registrarOrden()">
+            Comprar
+            <mat-icon>shopping_bag</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+}@else{
+<mat-card class="box">
+    Agregue videojuegos a la compra
+</mat-card>
+}

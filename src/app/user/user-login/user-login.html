@@ -1,0 +1,69 @@
+<form [formGroup]="formulario" novalidate>
+  <mat-card class="card-content">
+    <mat-card-header>
+      <mat-card-title class="title">Login Usuario</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+
+            <input matInput type="email" placeholder="Email usuario" formControlName="email" />
+
+            @if (formulario.get('email')?.invalid &&
+            (formulario.get('email')?.dirty || formulario.get('email')?.touched)) {
+
+            @if (formulario.get('email')?.errors?.['required']) {
+            <mat-error>El correo es obligatorio</mat-error>
+            }
+            @if (formulario.get('email')?.errors?.['email']) {
+            <mat-error>Formato de correo inválido</mat-error>
+            }
+            }
+
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario"
+              formControlName="password" />
+
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+
+            @if (formulario.get('password')?.invalid &&
+            (formulario.get('password')?.dirty || formulario.get('password')?.touched)) {
+
+            @if (formulario.get('password')?.errors?.['required']) {
+            <mat-error>La contraseña es obligatoria</mat-error>
+            }
+            @if (formulario.get('password')?.errors?.['minlength']) {
+            <mat-error>Mínimo 6 caracteres</mat-error>
+            }
+            }
+
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-flat-button color="primary" (click)="submitForm()">
+        Login
+      </button>
+
+      <button mat-stroked-button color="warn" (click)="onReset()" type="reset">
+        Cancelar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

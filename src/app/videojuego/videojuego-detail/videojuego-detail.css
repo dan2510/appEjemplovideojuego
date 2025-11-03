@@ -1,0 +1,159 @@
+.home-card {
+    margin: 10px auto;
+    border-radius: 4px;
+    width: 95%;
+    padding: 1em;
+    line-height: 1.5em;
+    box-sizing: border-box;
+}
+
+mat-card-header {
+    font-weight: 500;
+    margin-bottom: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+}
+
+.home-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+    padding: 1em;
+}
+
+.home-card-content img,
+.videojuego-details-info {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-card-content img {
+    height: auto;
+    border-radius: 4px;
+}
+
+.videojuego-details-info {
+    gap: 0.2em;
+}
+
+.videojuego-details-info>div {
+    width: 100%;
+    text-align: center;
+}
+
+.videojuego-details-info>div>.title {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+}
+
+.price {
+    font-weight: 900;
+    font-size: 2em;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+mat-chip-listbox {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.text {
+    text-align: center;
+    margin: auto;
+}
+
+.detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 1em;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 1em;
+}
+
+@media (min-width: 768px) {
+    .home-card {
+        width: 80%;
+        max-width: 800px;
+        padding: 1.5em;
+    }
+
+    .home-card-content {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2em;
+    }
+
+    .home-card-content img,
+    .videojuego-details-info {
+        flex: 1;
+        max-width: 50%;
+        align-items: flex-start;
+    }
+
+    .home-card-content img {
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+    }
+
+    .videojuego-details-info>div {
+        text-align: left;
+    }
+
+    .price {
+        text-align: right;
+    }
+
+    mat-chip-listbox {
+        justify-content: flex-start;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .detail-actions button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .home-card {
+        width: 70%;
+        max-width: 960px;
+    }
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    justify-content: center;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card mat-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card mat-card-header {
+    font-size: 1.2em;
+}

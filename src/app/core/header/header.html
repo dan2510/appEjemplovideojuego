@@ -1,0 +1,72 @@
+<mat-toolbar color="primary" class="header">
+    <!-- Logo Home -->
+    <button mat-icon-button matTooltip="Inicio" [routerLink]="['/inicio']" routerLinkActive="active-link">
+        <mat-icon>home</mat-icon>
+    </button>
+
+    <!-- Menu -->
+    <button mat-icon-button matTooltip="Menú" [matMenuTriggerFor]="menu1">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu1="matMenu">
+       <button mat-menu-item [routerLink]="['/inicio']" routerLinkActive="active-link">Inicio</button>
+    <button mat-menu-item [routerLink]="['/acerca-de']" routerLinkActive="active-link">Acerca de</button>
+    <button mat-menu-item [routerLink]="['/videojuego']" routerLinkActive="active-link">Videojuego</button>
+    </mat-menu>
+
+    <!-- Mantenimientos -->
+    <button mat-icon-button matTooltip="Admin" [matMenuTriggerFor]="menuAdmin">
+        <mat-icon>save_as</mat-icon>
+    </button>
+
+    <mat-menu #menuAdmin="matMenu">
+        <!-- ------ Restriccion de acceso visual ----- -->
+        <!-- Mostar enlace solo sí es admin -->
+        @if(isAdmin()) {
+        <button mat-menu-item [routerLink]="'/videojuego-admin'" [routerLinkActive]="'active-link'">Videojuegos</button>
+        }
+    </mat-menu>
+
+    <!-- Reportes -->
+    <button mat-icon-button matTooltip="Reportes" [matMenuTriggerFor]="menuReportes"  routerLinkActive="active-link">
+        <mat-icon>monitoring</mat-icon>
+    </button>
+
+    <mat-menu #menuReportes="matMenu">
+        <button mat-menu-item [routerLink]="'/reportes'" [routerLinkActive]="'active-link'">Reportes</button>
+    </mat-menu>
+
+    <span class="example-spacer"></span>
+
+    <!-- Carrito -->
+    <button mat-icon-button [matBadge]="qtyItems().toString() || '0'" matBadgeColor="accent" [routerLink]="['/orden']"
+        routerLinkActive="active-link">
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+    <!-- Usuario -->
+    @if(isAuthenticated()) {
+    <span class="small-text">{{ currentUser()?.email }}</span>
+    }
+
+    <button mat-icon-button color="accent" [matMenuTriggerFor]="menuUser">
+        <mat-icon>person</mat-icon>
+    </button>
+
+    <mat-menu #menuUser="matMenu">
+        <!-- No autenticado mostrar login-->
+        @if(!isAuthenticated()) {
+        <button mat-menu-item (click)="login()">
+            <mat-icon>login</mat-icon>
+            <span>Login</span>
+        </button>
+        } @else {
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+        </button>
+        }
+    </mat-menu>
+
+</mat-toolbar>

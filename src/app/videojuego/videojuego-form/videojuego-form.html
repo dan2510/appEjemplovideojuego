@@ -1,0 +1,186 @@
+<form [formGroup]="videojuegoForm" (ngSubmit)="submitVideojuego()" novalidate>
+    <input type="hidden" formControlName="id" />
+
+    <mat-card class="form-card">
+        <mat-card-header class="primary-title title">
+            <mat-card-title>{{ titleForm }} Videojuego</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <!-- NOMBRE -->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" floatLabel="auto">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Nombre">
+                        @if(videojuegoForm.controls['nombre'].invalid && videojuegoForm.controls['nombre'].touched) {
+                        <mat-error>
+                            @if(videojuegoForm.controls['nombre'].errors?.['required']) {El nombre es obligatorio}
+                            @if(videojuegoForm.controls['nombre'].errors?.['minlength']) {El nombre debe tener al menos
+                            2 caracteres}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- DESCRIPCIÓN Y PRECIO -->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" floatLabel="auto">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput formControlName="descripcion" placeholder="Descripción"></textarea>
+                        @if(videojuegoForm.controls['descripcion'].invalid &&
+                        videojuegoForm.controls['descripcion'].touched) {
+                        <mat-error>
+                            @if(videojuegoForm.controls['descripcion'].errors?.['required']) {La descripción es
+                            obligatoria}
+                            @if(videojuegoForm.controls['descripcion'].errors?.['minWords']) {La descripción debe tener
+                            al menos 3 palabras}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field class="full-width" floatLabel="auto">
+                        <mat-label>Precio</mat-label>
+                        <input matInput formControlName="precio" placeholder="Precio" floatLabel="always">
+                        <span matTextPrefix>$&nbsp;</span>
+                        @if(videojuegoForm.controls['precio'].invalid && videojuegoForm.controls['precio'].touched) {
+                        <mat-error>
+                            @if(videojuegoForm.controls['precio'].errors?.['required']) {El precio es obligatorio}
+                            @if(videojuegoForm.controls['precio'].errors?.['pattern']) {El precio debe tener 2 decimales
+                            válidos}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- GÉNEROS -->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width" floatLabel="auto">
+                        <mat-label>Géneros</mat-label>
+                        <mat-select placeholder="Géneros" formControlName="generos" multiple>
+                            @for (item of generosList(); track item.id) {
+                            <mat-option [value]="item.id">{{ item.nombre }}</mat-option>
+                            }
+                        </mat-select>
+                        @if(videojuegoForm.controls['generos'].invalid && videojuegoForm.controls['generos'].touched) {
+                        <mat-error>Seleccione al menos un género</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- PLATAFORMAS -->
+            <div class="row">
+                <div class="col"><mat-label>Plataformas</mat-label></div>
+                <div class="col">
+                    <button mat-fab extended type="button" class="btn-secondary" (click)="addPlataforma()">
+                        <mat-icon>add</mat-icon> Agregar Plataforma
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <thead class="bg-tertiary">
+                        <tr>
+                            <th>Plataforma</th>
+                            <th>Año de lanzamiento</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="plataformas">
+                        <!-- Array de plataformas -->
+                        @for (p of plataformas.controls; track $index; let i = $index) {
+                        <tr [formGroupName]="i">
+                            <td>
+                                <mat-form-field>
+                                    <mat-select placeholder="Plataforma" formControlName="plataformaId"
+                                        id="plataformaId{{i}}">
+                                        @for (item of plataformaList(); track item.id) {
+                                        <mat-option [value]="item.id">{{ item.nombre }}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if(plataformas.controls[i].get('plataformaId')?.invalid &&
+                                    (plataformas.controls[i].get('plataformaId')?.touched)) {
+                                    <mat-error>Seleccione una plataforma</mat-error>
+                                    }
+
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput formControlName="anno_lanzamiento" placeholder="Año de lanzamiento">
+                                    @if(plataformas.controls[i].get('anno_lanzamiento')?.invalid &&
+                                    plataformas.controls[i].get('anno_lanzamiento')?.touched) {
+                                    <mat-error>Año inválido</mat-error>
+                                    }
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button matMiniFab type="button" (click)="removePlataforma(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PUBLICAR -->
+            <div class="row">
+                <div class="col">
+                    <mat-label>Publicar</mat-label>
+                    <mat-radio-group formControlName="publicar">
+                        <mat-radio-button [value]="true">Sí</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <!-- SUBIR IMAGEN -->
+            <div class="container">
+                <div class="card">
+                    <h3>Subir imagen</h3>
+                    <div class="row">
+                        <div class="col drop_box">
+                            <h4>Seleccione un archivo</h4>
+                            <input type="file" accept="image/*" (change)="selectFile($event)" #fileUpload
+                                class="file-input" />
+                            <div class="file-upload">
+                                @if(preview) {
+                                <img mat-card-image height="200px" [src]="preview" alt="Imagen Videojuego">
+                                }
+                                {{ nameImage || "No se ha subido ningún archivo todavía" }}
+                                <button type="button" matMiniFab class="upload-btn btn-secondary"
+                                    (click)="fileUpload.click()">
+                                    <mat-icon>attach_file</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        @if(!isCreate) {
+                        <div class="col drop_box">
+                            <h4>Imagen videojuego</h4>
+                            <img mat-card-image height="200px" [src]="'http://localhost:3000/images/' + previousImage"
+                                alt="Imagen Videojuego">
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </mat-card-content>
+
+        <mat-card-actions class="button-row">
+            <button matButton class="btn-tertiary" type="button" (click)="onReset()">Reset</button>
+            <button matButton class="btn-secondary" type="button" (click)="onBack()">Regresar</button>
+            <button matButton class="btn-primary" type="submit">Guardar</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

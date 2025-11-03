@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* ================= Estilo global para TOAST ================= */
+
+[class*="toast-"] {
+    padding: 14px 18px;
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.25);
+}
+
+.toast-success {
+    background: rgba(40, 167, 69, 0.88) !important;
+    color: #fff !important;
+    border-left-color: #0f8c3c;
+    font-weight: bold !important;
+}
+
+.toast-info {
+    background: rgba(2, 117, 216, 0.88) !important;
+    color: #fff !important;
+    border-left-color: #0358a6;
+    font-weight: bold !important;
+}
+
+.toast-warning {
+    background: rgba(240, 173, 78, 0.89) !important;
+    color: #000 !important;
+    border-left-color: #c27d00;
+    font-weight: bold;
+}
+
+.toast-error {
+    background: rgba(217, 83, 79, 0.9) !important;
+    color: #fff !important;
+    border-left-color: #a3120b;
+    font-weight: bold;
+}

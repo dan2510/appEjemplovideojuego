@@ -1,0 +1,49 @@
+@if(datos()){
+    <mat-card class="home-card" appearance="outlined">
+        <mat-card-header class="card-header-secondary">
+            <mat-card-title-group>
+                <mat-card-title>{{datos()?.nombre}}</mat-card-title>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content class="home-card-content">
+            <img mat-card-image [src]="'http://localhost:3000/images/'+datos()?.imagen" [alt]="datos()?.nombre" />
+            <div class="videojuego-details-info">
+                <div>
+                    <p>{{datos()?.descripcion}}</p>
+                </div>
+                <div>
+                    <p class="price">{{datos()?.precio | currency:"USD"}}</p>
+                </div>
+                <div>
+                    <p class="title">Géneros:</p>
+                    <mat-chip-listbox aria-label="Generos">
+                        @for (item of datos()?.generos; track $index) {
+                        <mat-chip-option class="chip-tertiary">
+                            {{item.nombre}}
+                        </mat-chip-option>
+                        }
+                    </mat-chip-listbox>
+                </div>
+
+                <div>
+                    <p class="title">Plataformas:</p>
+                    <mat-chip-listbox aria-label="Plataformas">
+                        @for (item of datos()?.plataformas; track $index) {
+                        <mat-chip class="chip-primary">
+                            {{item.plataforma.nombre}}
+                            <mat-chip class="chip-secondary">{{item.anno_lanzamiento}}</mat-chip>
+                        </mat-chip>
+                        }
+                    </mat-chip-listbox>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="detail-actions">
+            <button mat-button (click)="goBack()" class="bg-primary">Regresar</button>
+        </mat-card-actions>
+    </mat-card>
+}@else {
+    <mat-card-content class="home-card-content">
+        <p class="mat-body text">Videojuego no encontrado</p>
+    </mat-card-content>
+}

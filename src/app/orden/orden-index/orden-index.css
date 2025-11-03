@@ -1,0 +1,38 @@
+.table-orden{
+  align-items: center;
+}
+
+.footer-total{
+  font-size: 1.2em;
+  font-weight: bolder;
+}
+.box { margin: 1em 0.5em; padding: 0.5em;}
+.box h3 {
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 0.5em;
+}
+.cantidad-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-direction: row;
+   min-width: 200px;
+}
+
+.cantidad-box {
+  min-width: 25px;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #f8f8f8;
+  color: #333;
+}
+.mini {
+  width: 25px;
+  height: 25px;
+  min-height: 25px;
+}
